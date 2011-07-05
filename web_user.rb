@@ -36,8 +36,12 @@ module WebUser
 #    end
   end
 
-  def click_on element, type
-    @browser.alert { @browser.send( type, application(element) ).click }
+  def click_on element, type, index=0
+    hash = application(element)
+    key = hash.keys[0]
+    value = hash[key]
+    @browser.alert { @browser.send( type, key => value, :index => index.to_i).click }
+
   end
 
   def enter into_field, text
@@ -69,6 +73,25 @@ module WebUser
   
   def close_the_browser
     @browser.close
+  end
+
+  def set_checkbox name
+    @browser.checkbox(:name, name).set
+  end
+  
+  def clear_checkbox name
+    @browser.checkbox(:name, name).clear
+  end
+
+  def get_element type, value
+    element = @browser.element(type, value)
+  end
+
+  def can_interact_with element, type, index=0
+    hash = application(element)
+    key = hash.keys[0]
+    value = hash[key]
+    @browser.send( type, key => value, :index => index.to_i).visible?
   end
 
   private

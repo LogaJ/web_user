@@ -1,6 +1,7 @@
 class Scribe
 
   def initialize
+    testing = 123
     @notepad = {}
   end
 

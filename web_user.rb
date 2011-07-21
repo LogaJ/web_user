@@ -98,7 +98,6 @@ module WebUser
     @browser.elelment( application(element)).fire_event :hover
   end
 
-  end
   private
  
   def application element

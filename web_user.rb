@@ -94,8 +94,8 @@ module WebUser
     @browser.send( type, key => value, :index => index.to_i).visible?
   end
 
-  def hover_mouse_over element
-    @browser.element( application(element)).fire_event :onmouseover
+  def trigger element, event
+    @browser.element( application(element)).fire_event event
   end
 
   private

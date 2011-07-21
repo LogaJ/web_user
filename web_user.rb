@@ -95,7 +95,7 @@ module WebUser
   end
 
   def hover_mouse_over element
-    @browser.elelment( application(element)).fire_event :hover
+    @browser.element( application(element)).fire_event :hover
   end
 
   private

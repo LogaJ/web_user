@@ -36,12 +36,8 @@ module WebUser
 #    end
   end
 
-  def click_on element, type, index=0
-    hash = application(element)
-    key = hash.keys[0]
-    value = hash[key]
-    @browser.alert { @browser.send( type, key => value, :index => index.to_i).click }
-
+  def click_on element, type
+     @browser.alert { @browser.send( type, application(element) ).click }
   end
 
   def enter into_field, text

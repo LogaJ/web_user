@@ -27,17 +27,23 @@ describe WebUser do
     user = TestWebUser.new({ :home_page => "file://#{TEST_DATA_DIR}/home_page.html" }, Watir::Browser.new)
     user.goto :home_page 
     expected_content = "There are currently no pink frogs residing on this page"
+
     user.can_see?( expected_content ).should be_true
   end
 
   it 'fills in a text field' do
-    user = new_user
-    element = double()
-    element.should_receive( :set ).with( "Loga" )
-    @browser.should_receive( :text_field ).with( :id => "name" ).and_return( element )
+    user = TestWebUser.new(
+      { :home_page => "file://#{TEST_DATA_DIR}/home_page.html", 
+        :name => { :id => 'name' } 
+    }, Watir::Browser.new)
+    user.goto :home_page
+
+    user.fill_in :name, "Loga" 
     
-    user.enter :name, "Loga" 
+    user.whats_the(:name, :text_field, :value).should == "Loga"
   end
+
+  it 'complains when it does not know how to find the element' 
 
   it "tells us the content of a text field" do
     user = new_user

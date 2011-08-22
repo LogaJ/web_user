@@ -1,8 +1,7 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', "roles"))
 require 'rspec'
 require 'web_user'
-
-#TODO: WE need to cleen up the tests in this file... save for next time
+require 'spec_helper'
 
 class TestWebUser
   include WebUser
@@ -27,10 +26,10 @@ end
 describe WebUser do
 
   it 'goes to a url' do
-    user = new_user
-    @browser.should_receive( :goto ).with( "http://example.com" )
-
+    user = TestWebUser.new({ :home_page => "file://#{TEST_DATA_DIR}/home_page.html" }, Watir::Browser.new)
     user.goto :home_page 
+    expected_content = "There are currently no pink frogs residing on this page"
+    user.can_see?( expected_content ).should be_true
   end
 
   it 'fills in a text field' do

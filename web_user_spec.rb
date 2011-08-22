@@ -1,7 +1,5 @@
-$:.unshift(File.join(File.dirname(__FILE__), '..', "roles"))
-require 'rspec'
-require 'web_user'
 require 'spec_helper'
+require 'web_user'
 
 class TestWebUser
   include WebUser

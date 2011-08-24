@@ -1,4 +1,4 @@
-$:.unshift(File.join(File.dirname(__FILE__), '..', "roles"))
+$:.unshift(File.join(File.dirname(__FILE__), '..', "lib"))
 require 'rspec'
 
 WORKING_DIR = File.dirname(__FILE__)

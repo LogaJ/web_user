@@ -1,0 +1,31 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    childprocess (0.2.1)
+      ffi (~> 1.0.6)
+    diff-lcs (1.1.2)
+    ffi (1.0.9)
+    json_pure (1.5.3)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.4)
+    rspec-expectations (2.6.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.6.0)
+    rubyzip (0.9.4)
+    selenium-webdriver (2.5.0)
+      childprocess (>= 0.2.1)
+      ffi (>= 1.0.7)
+      json_pure
+      rubyzip
+    watir-webdriver (0.3.2)
+      selenium-webdriver (>= 0.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rspec
+  watir-webdriver

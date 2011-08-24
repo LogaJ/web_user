@@ -1,2 +1,0 @@
-to add this submodule to the fulcrum_acceptance_tests repo, use the following git command:
-git submodule add git@gitosis.net-a-porter.com:/test_spec features/spec

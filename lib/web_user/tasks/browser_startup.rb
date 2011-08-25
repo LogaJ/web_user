@@ -13,19 +13,19 @@ module BrowserStartup
   end
 
   class OS
-    def is_unix_based?
+    def self.is_unix_based?
       is_mac? or is_linux?
     end
 
-    def is_mac?
+    def self.is_mac?
       RUBY_PLATFORM.downcase.include?("darwin")
     end
 
-    def is_windows?
+    def self.is_windows?
       RUBY_PLATFORM.downcase.include?("mawin")
     end
 
-    def is_linux
+    def self.is_linux
       RUBY_PLATFORM.downcase.include("linux")
     end
   end

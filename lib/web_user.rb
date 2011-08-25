@@ -1,3 +1,4 @@
+require 'web_user/version'
 require 'scribe'
 require 'watir-webdriver'
 require 'watir-webdriver/extensions/alerts'

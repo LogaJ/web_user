@@ -1,4 +1,4 @@
-$:.unshift(File.join(File.dirname(__FILE__), "tasks"))
+$:.unshift(File.join(File.dirname(__FILE__), 'tasks'))
 
 require  'browser_startup'
 require  'login'

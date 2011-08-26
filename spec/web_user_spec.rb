@@ -12,38 +12,38 @@ end
 def new_user
   @browser = double()
   @site_map = {
-   :home_page     => "http://example.com",
-   :name          => { :id    => "name"       }, 
-   :submit        => { :value => "Submit Me"  },
-   :impersonation => { :id    => "Bo Selecta" },
-   :username      => { :id    => "name"       }
+    :home_page     => "http://example.com",
+    :name          => { :id    => "name"       },
+    :submit        => { :value => "Submit Me"  },
+    :impersonation => { :id    => "Bo Selecta" },
+    :username      => { :id    => "name"       }
   }
   TestWebUser.new @site_map, @browser
 end
 
 describe WebUser do
 
+  let(:user) { TestWebUser.new(
+    { :home_page => "file://#{TEST_DATA_DIR}/home_page.html",
+      :name => { :id => 'name' }
+  }, browser) }
+  let(:browser) { Watir::Browser.new }
+
   it 'goes to a url' do
-    user = TestWebUser.new({ :home_page => "file://#{TEST_DATA_DIR}/home_page.html" }, Watir::Browser.new)
-    user.goto :home_page 
+    user.goto :home_page
     expected_content = "There are currently no pink frogs residing on this page"
 
     user.can_see?( expected_content ).should be_true
   end
 
   it 'fills in a text field' do
-    user = TestWebUser.new(
-      { :home_page => "file://#{TEST_DATA_DIR}/home_page.html", 
-        :name => { :id => 'name' } 
-    }, Watir::Browser.new)
     user.goto :home_page
+    user.fill_in :name, "Loga"
 
-    user.fill_in :name, "Loga" 
-    
     user.whats_the(:name, :text_field, :value).should == "Loga"
   end
 
-  it 'complains when it does not know how to find the element' 
+  it 'complains when it does not know how to find the element'
 
   it "tells us the content of a text field" do
     user = new_user
@@ -77,7 +77,7 @@ describe WebUser do
   it "tells you when can see something" do
     user = new_user
     something = "some text"
-    @browser.should_receive( :text ).and_return( "this is #{something} of interest") 
+    @browser.should_receive( :text ).and_return( "this is #{something} of interest")
 
     user.can_see?( something ).should be_true
   end
@@ -91,7 +91,7 @@ describe WebUser do
 
   it "tells you when it can see something in an element" do
     user = new_user
-    phrase = "Bob's your uncle" 
+    phrase = "Bob's your uncle"
     mock_element = double()
     @browser.should_receive( :element ).with( @site_map[:name] ).and_return( mock_element )
     mock_element.should_receive( :text ).and_return( "This is some text with #{phrase}" )
@@ -101,7 +101,7 @@ describe WebUser do
 
   it "tells you when it cannot see something in an element" do
     user = new_user
-    phrase = "a phrase that will not be found in the text" 
+    phrase = "a phrase that will not be found in the text"
     mock_element = double()
     @browser.should_receive( :element ).with( @site_map[:name] ).and_return( mock_element )
     mock_element.should_receive( :text ).and_return( "This is some text" )
@@ -116,7 +116,7 @@ describe WebUser do
     @browser.should_receive( :button ).with( :value => "Submit Me" ).and_return( element )
     @browser.stub( :alert ) do | block |
       block.call
-      "There was an alert"
+    "There was an alert"
     end
     message = user.whats_the_alert_message_when_you do
       user.click_on( :submit, :button )
@@ -125,22 +125,26 @@ describe WebUser do
   end
 
   it "looks in the available tables for an " do
-    
+
   end
 
   it "selects something" do
     user = new_user
     element = double()
-    element.should_receive( :select ).with "Michael Jackson" 
+    element.should_receive( :select ).with "Michael Jackson"
     @browser.should_receive( :select_list ).with( :id => "Bo Selecta" ).and_return element
 
     user.choose :impersonation, "Michael Jackson"
   end
 
   it 'closes the browser' do
-    user = new_user
-    @browser.should_receive(:close) 
+    user.goto :home_page
 
+    browser.should_receive(:close)
+    user.close_the_browser
+  end
+
+  after(:all) do
     user.close_the_browser
   end
 end

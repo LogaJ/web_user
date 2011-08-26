@@ -15,7 +15,7 @@ module WebUser
 
   def can_see? something
     text = @browser.text
-    text.include? something 
+    text.include? something
   end
 
   #TODO: merge this functionality into the other can_see method //AM 26-05-2011
@@ -67,7 +67,7 @@ module WebUser
   def whats_the_alert_message_when_you &do_this
     do_this.call
   end
-  
+
   def close_the_browser
     @browser.close
   end
@@ -75,7 +75,7 @@ module WebUser
   def set_checkbox name
     @browser.checkbox(:name, name).set
   end
-  
+
   def clear_checkbox name
     @browser.checkbox(:name, name).clear
   end
@@ -96,7 +96,7 @@ module WebUser
   end
 
   private
- 
+
   def application element
     @application[element]
   end

@@ -47,7 +47,9 @@ describe WebUser do
     user.whats_the(:name, :text_field, :value).should == "Loga"
   end
 
-  it 'complains when it does not know how to find the element'
+  it 'complains when it cannot find an element' do
+    expect { user.whats_the(:non_existing_element, :paragraph, :text)}.should raise_error
+  end
 
   describe 'can read the correct information' do
     it "from paragraph elements" do

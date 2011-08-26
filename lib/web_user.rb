@@ -98,7 +98,9 @@ module WebUser
   private
 
   def application element
-    @application[element]
+    element = @application[element]
+    raise "Element #{element} of type: #{type} doesn't exist!" if element.nil?
+    return element
   end
 
   def value_from element_info

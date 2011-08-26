@@ -29,9 +29,10 @@ describe WebUser do
 
   let(:user) { TestWebUser.new(
     { :home_page => "file://#{TEST_DATA_DIR}/home_page.html",
-      :name => { :id => 'name' },
+      :name      => { :id => 'name' },
       :item_information => { :id => 'information' },
-      :color => { :name => 'color' }
+      :color      => { :name => 'color' },
+      :description  => { :name  => 'description'}
   }, browser) }
   let(:browser) { Watir::Browser.new }
 
@@ -77,6 +78,19 @@ describe WebUser do
 
       user.can_see?(not_existing_content).should be_false
     end
+
+    it "that they can see a phrase contained in an element" do
+      phrase = "what is going on"
+
+      user.can_see_the?(phrase, in_the: :description).should be_true
+    end
+
+
+    it "that they cannot see a phrase when it's not contained in an element" do
+      phrase = "a phrase that will not be found in the text"
+
+      user.can_see_the?(phrase, in_the: :description).should be_false
+    end
   end
 
   it 'closes the browser' do
@@ -96,25 +110,6 @@ describe WebUser do
     user.click_on :submit, :button
   end
 
-  it "tells you when it can see something in an element" do
-    user = new_user
-    phrase = "Bob's your uncle"
-    mock_element = double()
-    @browser.should_receive( :element ).with( @site_map[:name] ).and_return( mock_element )
-    mock_element.should_receive( :text ).and_return( "This is some text with #{phrase}" )
-
-    user.can_see_the?( phrase, in_the: :name ).should be_true
-  end
-
-  it "tells you when it cannot see something in an element" do
-    user = new_user
-    phrase = "a phrase that will not be found in the text"
-    mock_element = double()
-    @browser.should_receive( :element ).with( @site_map[:name] ).and_return( mock_element )
-    mock_element.should_receive( :text ).and_return( "This is some text" )
-
-    user.can_see_the?( phrase, in_the: :name ).should be_false
-  end
 
   it "gives us the message when an alert box appears" do
     user = new_user

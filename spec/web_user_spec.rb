@@ -63,6 +63,12 @@ describe WebUser do
     end
   end
 
+  it 'closes the browser' do
+    browser.should_receive(:close)
+
+    user.close_the_browser
+  end
+
   it "clicks on something" do
     user = new_user
     element = double()
@@ -137,11 +143,6 @@ describe WebUser do
     user.choose :impersonation, "Michael Jackson"
   end
 
-  it 'closes the browser' do
-    browser.should_receive(:close)
-
-    user.close_the_browser
-  end
 
   after(:all) do
     user.close_the_browser

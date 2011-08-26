@@ -23,21 +23,25 @@ end
 
 describe WebUser do
 
+  before(:all) do
+    user.goto :home_page
+  end
+
   let(:user) { TestWebUser.new(
     { :home_page => "file://#{TEST_DATA_DIR}/home_page.html",
-      :name => { :id => 'name' }
+      :name => { :id => 'name' },
+      :item_information => { :id => 'information' },
+      :color => { :name => 'color' }
   }, browser) }
   let(:browser) { Watir::Browser.new }
 
-  it 'goes to a url' do
-    user.goto :home_page
+  it 'navigates to a url' do
     expected_content = "There are currently no pink frogs residing on this page"
 
     user.can_see?( expected_content ).should be_true
   end
 
   it 'fills in a text field' do
-    user.goto :home_page
     user.fill_in :name, "Loga"
 
     user.whats_the(:name, :text_field, :value).should == "Loga"
@@ -45,22 +49,18 @@ describe WebUser do
 
   it 'complains when it does not know how to find the element'
 
-  it "tells us the content of a text field" do
-    user = new_user
-    element = double()
-    element.should_receive( :value ).and_return( "Loga" )
-    @browser.should_receive( :text_field ).with( :id => "name" ).and_return( element )
+  describe 'can read the correct information' do
+    it "from paragraph elements" do
+      expected_content = 'Blue skirt, red top'
 
-    user.whats_the :username, :text_field, :value
-  end
+      user.whats_the(:item_information, :paragraph, :text).should == expected_content
+    end
 
-  it "tells us the content of a paragraph" do
-    user = new_user
-    element = double()
-    element.should_receive( :text ).and_return( "Loga" )
-    @browser.should_receive( :p ).with( :id => "name" ).and_return( element )
+    it "from text field elements" do
+      expected_content = 'black with white stripes'
 
-    user.whats_the :username, :paragraph, :text
+      user.whats_the(:color, :text_field, :value).should == expected_content
+    end
   end
 
   it "clicks on something" do
@@ -138,9 +138,8 @@ describe WebUser do
   end
 
   it 'closes the browser' do
-    user.goto :home_page
-
     browser.should_receive(:close)
+
     user.close_the_browser
   end
 

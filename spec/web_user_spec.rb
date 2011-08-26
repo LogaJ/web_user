@@ -32,7 +32,8 @@ describe WebUser do
       :name      => { :id => 'name' },
       :item_information => { :id => 'information' },
       :color      => { :name => 'color' },
-      :description  => { :name  => 'description'}
+      :description  => { :name  => 'description'},
+      :submit        => { :id => "submit"  }
   }, browser) }
   let(:browser) { Watir::Browser.new }
 
@@ -99,17 +100,13 @@ describe WebUser do
     user.close_the_browser
   end
 
-  it "clicks on something" do
-    user = new_user
-    element = double()
-    element.should_receive( :click )
-    @browser.should_receive( :button ).with( :value => "Submit Me" ).and_return( element )
-    @browser.stub( :alert ) do | block |
-      block.call
-    end
+  it 'can click elements' do
+    element = double
+    browser.should_receive(:send).and_return(element)
+    element.should_receive(:click)
+
     user.click_on :submit, :button
   end
-
 
   it "gives us the message when an alert box appears" do
     user = new_user

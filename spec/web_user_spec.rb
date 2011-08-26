@@ -65,6 +65,20 @@ describe WebUser do
     end
   end
 
+  describe 'can confirm' do
+    it 'that they can see the content that is on the page' do
+      existing_content = "There are currently no pink frogs residing on this page"
+
+      user.can_see?(existing_content).should be_true
+    end
+
+    it 'that they can not see content that is not on the page' do
+      not_existing_content = "The pink ducks went home"
+
+      user.can_see?(not_existing_content).should be_false
+    end
+  end
+
   it 'closes the browser' do
     browser.should_receive(:close)
 
@@ -80,21 +94,6 @@ describe WebUser do
       block.call
     end
     user.click_on :submit, :button
-  end
-
-  it "tells you when can see something" do
-    user = new_user
-    something = "some text"
-    @browser.should_receive( :text ).and_return( "this is #{something} of interest")
-
-    user.can_see?( something ).should be_true
-  end
-
-  it "tells you when cannot see something" do
-    user = new_user
-    something = "some other text"
-    @browser.should_receive( :text ).and_return( "this is some text, without something" )
-    user.can_see?( something ).should be_false
   end
 
   it "tells you when it can see something in an element" do
@@ -144,7 +143,6 @@ describe WebUser do
 
     user.choose :impersonation, "Michael Jackson"
   end
-
 
   after(:all) do
     user.close_the_browser

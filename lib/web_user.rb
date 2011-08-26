@@ -14,8 +14,7 @@ module WebUser
   end
 
   def can_see? something
-    text = @browser.text
-    text.include? something
+    @browser.text.include? something
   end
 
   #TODO: merge this functionality into the other can_see method //AM 26-05-2011

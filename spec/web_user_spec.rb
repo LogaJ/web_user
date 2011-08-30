@@ -28,12 +28,13 @@ describe WebUser do
   end
 
   let(:user) { TestWebUser.new(
-    { :home_page => "file://#{TEST_DATA_DIR}/home_page.html",
-      :name      => { :id => 'name' },
+    { :home_page        => "file://#{TEST_DATA_DIR}/home_page.html",
+      :name             => { :id => 'name' },
       :item_information => { :id => 'information' },
-      :color      => { :name => 'color' },
-      :description  => { :name  => 'description'},
-      :submit        => { :id => "submit"  }
+      :color            => { :name => 'color' },
+      :description      => { :name  => 'description'},
+      :alert            => { :id  => 'alertbutton'},
+      :submit           => { :id => "submit"  }
   }, browser) }
   let(:browser) { Watir::Browser.new }
 

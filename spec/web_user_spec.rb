@@ -34,6 +34,7 @@ describe WebUser do
       :color            => { :name => 'color' },
       :description      => { :name  => 'description'},
       :alert            => { :id  => 'alertbutton'},
+      :impersonation    => { :id    => "dropdown" },
       :submit           => { :id => "submit"  }
   }, browser) }
   let(:browser) { Watir::Browser.new }
@@ -122,12 +123,7 @@ describe WebUser do
   end
 
   it "selects something" do
-    user = new_user
-    element = double()
-    element.should_receive( :select ).with "Michael Jackson"
-    @browser.should_receive( :select_list ).with( :id => "Bo Selecta" ).and_return element
-
-    user.choose :impersonation, "Michael Jackson"
+    user.choose(:impersonation, "Michael Jackson").should == "Michael Jackson"
   end
 
   after(:all) do

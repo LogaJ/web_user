@@ -1,4 +1,6 @@
 module BrowserStartup
+  DEFAULT_BROWSER = :firefox
+
   def open_a_browser
     if OS.is_unix_based?
       settings = Selenium::WebDriver::Firefox::Profile.new
@@ -10,6 +12,11 @@ module BrowserStartup
     end
 
     @browser = Watir::Browser.new driver
+  end
+
+  def browser
+    return ENV['BROWSER'] if !ENV['BROWSER']
+    return DEFAULT_BROWSER
   end
 
   class OS

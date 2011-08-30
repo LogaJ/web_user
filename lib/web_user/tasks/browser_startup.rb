@@ -4,12 +4,12 @@ module BrowserStartup
       settings = Selenium::WebDriver::Firefox::Profile.new
       settings["network.proxy.type"] = 1
       settings["network.proxy.no_proxies_on"] = "localhost, 127.0.0.1, *.dave"
-      @driver = Selenium::WebDriver.for :firefox, :profile => settings
+      driver = Selenium::WebDriver.for :firefox, :profile => settings
     elsif OS.is_windows?
-      @driver = :ie
+      driver = :ie
     end
 
-    @browser = Watir::Browser.new @driver
+    @browser = Watir::Browser.new driver
   end
 
   class OS
@@ -22,7 +22,7 @@ module BrowserStartup
     end
 
     def self.is_windows?
-      RUBY_PLATFORM.downcase.include?("mawin")
+      RUBY_PLATFORM.downcase.include?("mswin" | "mingw")
     end
 
     def self.is_linux

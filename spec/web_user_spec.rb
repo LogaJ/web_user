@@ -9,23 +9,7 @@ class TestWebUser
   end
 end
 
-def new_user
-  @browser = double()
-  @site_map = {
-    :home_page     => "http://example.com",
-    :name          => { :id    => "name"       },
-    :submit        => { :value => "Submit Me"  },
-    :impersonation => { :id    => "Bo Selecta" },
-    :username      => { :id    => "name"       }
-  }
-  TestWebUser.new @site_map, @browser
-end
-
 describe WebUser do
-
-  before(:all) do
-    user.goto :home_page
-  end
 
   let(:user) { TestWebUser.new(
     { :home_page        => "file://#{TEST_DATA_DIR}/home_page.html",
@@ -39,16 +23,26 @@ describe WebUser do
   }, browser) }
   let(:browser) { Watir::Browser.new }
 
-  it 'navigates to a url' do
+  before(:all) do
+    user.goto :home_page
+  end
+
+  it 'can navigate to a url' do
     expected_content = "There are currently no pink frogs residing on this page"
 
     user.can_see?( expected_content ).should be_true
   end
 
-  it 'fills in a text field' do
+  it 'can fill in a text field' do
     user.fill_in :name, "Loga"
 
     user.whats_the(:name, :text_field, :value).should == "Loga"
+  end
+
+  it 'can close the browser' do
+    browser.should_receive(:close)
+
+    user.close_the_browser
   end
 
   it 'complains when it cannot find an element' do
@@ -88,18 +82,11 @@ describe WebUser do
       user.can_see_the?(phrase, in_the: :description).should be_true
     end
 
-
     it "that they cannot see a phrase when it's not contained in an element" do
       phrase = "a phrase that will not be found in the text"
 
       user.can_see_the?(phrase, in_the: :description).should be_false
     end
-  end
-
-  it 'closes the browser' do
-    browser.should_receive(:close)
-
-    user.close_the_browser
   end
 
   it 'can click elements' do
@@ -110,7 +97,7 @@ describe WebUser do
     user.click_on :submit, :button
   end
 
-  it "gives us the message when an alert box appears" do
+  it "can read the message of an alert box" do
     message = user.whats_the_alert_message_when_you do
       user.click_on :alert, :button
     end
@@ -118,13 +105,11 @@ describe WebUser do
     message.should == "Roses are red"
   end
 
-  it "looks in the available tables for an " do
-
-  end
-
-  it "selects something" do
+  it "can select an element from a drop down list" do
     user.choose(:impersonation, "Michael Jackson").should == "Michael Jackson"
   end
+
+  it "looks in the available tables for ..."
 
   after(:all) do
     user.close_the_browser

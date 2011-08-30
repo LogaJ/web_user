@@ -110,18 +110,11 @@ describe WebUser do
   end
 
   it "gives us the message when an alert box appears" do
-    user = new_user
-    element = double()
-    element.should_receive( :click )
-    @browser.should_receive( :button ).with( :value => "Submit Me" ).and_return( element )
-    @browser.stub( :alert ) do | block |
-      block.call
-    "There was an alert"
-    end
     message = user.whats_the_alert_message_when_you do
-      user.click_on( :submit, :button )
+      user.click_on :alert, :button
     end
-    message.should == "There was an alert"
+
+    message.should == "Roses are red"
   end
 
   it "looks in the available tables for an " do

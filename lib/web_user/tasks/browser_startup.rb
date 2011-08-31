@@ -15,7 +15,7 @@ module BrowserStartup
   end
 
   def browser
-    return ENV['RACK_ENV'].to_sym if ENV['RACK_ENV']
+    return ENV['BROWSER'].to_sym if ENV['BROWSER']
     return DEFAULT_BROWSER
   end
 

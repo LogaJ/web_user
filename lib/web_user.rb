@@ -16,23 +16,9 @@ module WebUser
     @browser.text.include? something
   end
 
-  #TODO: merge this functionality into the other can_see method //AM 26-05-2011
   def can_see_the? thing, in_the_element
     element = value_from in_the_element
     @browser.element( application(element) ).text.include?(thing)
-  end
-
-  #TODO: remove this spike code //AM 26-05-2011
-  def can_see_in_a_table? some_text
-    @browser.tables.each do | table |
-      table.strings
-    end
-
-#    tables_array.each do | table |
-#      table.hashes.each do | row_hash |
-#        return true if row_hash.has_value? some_text
-#      end
-#    end
   end
 
   def click_on element, type
@@ -104,5 +90,4 @@ module WebUser
   def value_from element_info
     element_info[:in_the]
   end
-  #TODO:is this managed on a shared remote submodule?
 end

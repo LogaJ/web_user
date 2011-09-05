@@ -22,7 +22,7 @@ module WebUser
   end
 
   def click_on element, type
-     @browser.alert { @browser.send( type, application(element) ).click }
+    @browser.alert { @browser.send( type, application(element) ).click }
   end
 
   def enter into_field, text
@@ -82,7 +82,7 @@ module WebUser
   private
 
   def application element
-    element = @application[element]
+    element = @application.get(element)
     raise "Element #{element} of type: #{type} doesn't exist!" if element.nil?
     return element
   end

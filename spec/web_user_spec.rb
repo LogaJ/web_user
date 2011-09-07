@@ -1,24 +1,6 @@
 require 'spec_helper'
 require 'web_user'
 
-class TestWebUser
-  include WebUser
-  def initialize(app_map, browser)
-    @application = app_map
-    @browser = browser
-  end
-end
-
-class Application
-  def initialize elements
-    @elements = elements
-  end
-
-  def get key
-    @elements[key]
-  end
-end
-
 describe WebUser do
 
   let(:application) { Application.new(
@@ -144,3 +126,22 @@ describe WebUser do
     user.close_the_browser
   end
 end
+
+class TestWebUser
+  include WebUser
+  def initialize(app_map, browser)
+    @application = app_map
+    @browser = browser
+  end
+end
+
+class Application
+  def initialize elements
+    @elements = elements
+  end
+
+  def get key
+    @elements[key]
+  end
+end
+

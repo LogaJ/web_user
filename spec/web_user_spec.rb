@@ -9,18 +9,30 @@ class TestWebUser
   end
 end
 
+class Application
+  def initialize elements
+    @elements = elements
+  end
+
+  def get key
+    @elements[key]
+  end
+end
+
 describe WebUser do
 
-  let(:user) { TestWebUser.new(
+  let(:application) { Application.new(
     { :home_page        => "file://#{TEST_DATA_DIR}/home_page.html",
-      :name             => { :id => 'name' },
+      :name             => { :name => 'name' },
+      :flower           => { :id => 'flower' },
       :item_information => { :id => 'information' },
       :color            => { :name => 'color' },
       :description      => { :name  => 'description'},
       :alert            => { :id  => 'alertbutton'},
       :impersonation    => { :id    => "dropdown" },
       :submit           => { :id => "submit"  }
-  }, browser) }
+  })}
+  let(:user) { TestWebUser.new(application, browser) }
   let(:browser) { Watir::Browser.new }
 
   before(:all) do
@@ -33,10 +45,27 @@ describe WebUser do
     user.can_see?( expected_content ).should be_true
   end
 
-  it 'can fill in a text field' do
-    user.fill_in :name, "Loga"
+  context 'can complete a text field using' do
+    it '#fill_in' do
+      name = "Grumpy"
+      user.fill_in :name, name
 
-    user.whats_the(:name, :text_field, :value).should == "Loga"
+      user.whats_the(:name, :text_field, :value).should == name
+    end
+
+    it '#enter' do
+      name = "Papa Smurf"
+      user.enter :name, name
+
+      user.whats_the(:name, :text_field, :value).should == name
+    end
+
+    it '#scan' do
+      flower = "daisy"
+      user.scan :flower, flower
+
+      user.whats_the(:flower, :text_field, :value).should == flower
+    end
   end
 
   it 'can close the browser' do

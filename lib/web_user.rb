@@ -25,17 +25,12 @@ module WebUser
     @browser.alert { @browser.send( type, application(element) ).click }
   end
 
-  def enter into_field, text
-    @browser.text_field(:id => into_field.to_s).set text
-  end
-
-  def scan into_field, text
-    @browser.text_field(:name => into_field.to_s).set text
-  end
-
   def fill_in element, text
     @browser.text_field( application(element) ).set text
   end
+
+  alias enter fill_in
+  alias scan fill_in
 
   def choose element, choice
     @browser.select_list( application(element) ).select choice

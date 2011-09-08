@@ -12,6 +12,7 @@ describe WebUser do
       :description      => { :name  => 'description'},
       :alert            => { :id  => 'alertbutton'},
       :impersonation    => { :id    => "dropdown" },
+      :other_page       => { :id    => "other_page" },
       :submit           => { :id => "submit"  }
   })}
   let(:user) { TestWebUser.new(application, browser) }
@@ -108,11 +109,11 @@ describe WebUser do
   end
 
   it 'can click elements' do
-    element = double
-    browser.should_receive(:send).and_return(element)
-    element.should_receive(:click)
+    user.click_on :other_page, :link
 
-    user.click_on :submit, :button
+    user.can_see?("The frog ate the cat").should be_true
+
+    user.goto :home_page
   end
 
   it "can read the message of an alert box" do

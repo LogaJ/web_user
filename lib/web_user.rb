@@ -40,16 +40,12 @@ module WebUser
   def whats_the element, type, information
     type = watir_method_for[type] unless watir_method_for[type].nil?
 
-    element = @browser.send( type, application( element ))
+    element = @browser.send(type, application(element))
     element.send information
   end
 
   def whats_the_alert_message_when_you &do_this
     do_this.call
-  end
-
-  def close_the_browser
-    @browser.close
   end
 
   def set_checkbox name

@@ -58,12 +58,6 @@ describe WebUser do
     end
   end
 
-  it 'can close the browser' do
-    browser.should_receive(:close)
-
-    user.close_the_browser
-  end
-
   it 'complains when it cannot find an element' do
     expect { user.whats_the(:non_existing_element, :paragraph, :text)}.should raise_error
   end
@@ -131,7 +125,7 @@ describe WebUser do
   it "looks in the available tables for ..."
 
   after(:all) do
-    user.close_the_browser
+    browser.close
   end
 end
 

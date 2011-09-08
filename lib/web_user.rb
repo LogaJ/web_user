@@ -29,6 +29,7 @@ module WebUser
     @browser.text_field( application(element) ).set text
   end
 
+  alias enter_the fill_in
   alias enter fill_in
   alias scan fill_in
 

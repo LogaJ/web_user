@@ -42,6 +42,13 @@ describe WebUser do
       user.whats_the(:name, :text_field, :value).should == name
     end
 
+    it '#enter_the' do
+      name = "Papa Smurf"
+      user.enter_the :name, name
+
+      user.whats_the(:name, :text_field, :value).should == name
+    end
+
     it '#scan' do
       flower = "daisy"
       user.scan :flower, flower

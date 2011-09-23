@@ -13,6 +13,9 @@ describe WebUser do
       :alert            => { :id  => 'alertbutton'},
       :impersonation    => { :id    => "dropdown" },
       :other_page       => { :id    => "other_page" },
+      :apples           => { :name    => "apples" },
+      :oranges          => { :id      => "oranges" },
+      :bananas          => { :id      => "bananas" },
       :submit           => { :id => "submit"  }
   })}
   let(:user) { TestWebUser.new(application, browser) }
@@ -120,6 +123,16 @@ describe WebUser do
 
   it "can select an element from a drop down list" do
     user.choose(:impersonation, "Michael Jackson").should == "Michael Jackson"
+  end
+
+  it "can opt for a number of choices" do
+    user.opt_for(:apples)
+    user.opt_for(:oranges)
+    user.opt_for(:bananas)
+
+    user.opted_for(:apples).should be_true
+    user.opted_for(:oranges).should be_true
+    user.opted_for(:bananas).should be_true
   end
 
   it "looks in the available tables for ..."

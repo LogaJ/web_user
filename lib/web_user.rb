@@ -48,6 +48,14 @@ module WebUser
     do_this.call
   end
 
+  def opt_for element
+    @browser.checkbox(application(element)).set
+  end
+
+  def opted_for element
+    @browser.checkbox(application(element)).set?
+  end
+
   def set_checkbox name
     @browser.checkbox(:name, name).set
   end

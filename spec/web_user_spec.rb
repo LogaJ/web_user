@@ -64,95 +64,102 @@ describe WebUser do
     end
   end
 
-  it 'complains when it cannot find an element' do
-    expect { user.whats_the(:non_existing_element, :paragraph, :text)}.should raise_error
-  end
+  context 'complains when it cannot find' do
 
-  describe 'can read the correct information' do
-    it "from paragraph elements" do
-      expected_content = 'Blue skirt, red top'
-
-      user.whats_the(:item_information, :paragraph, :text).should == expected_content
+    it 'whats in a paragraph' do
+      expect { user.whats_the(:non_existing_element, :paragraph, :text)}.should raise_error
     end
 
-    it "from text field elements" do
-      expected_content = 'black with white stripes'
-
-      user.whats_the(:color, :text_field, :value).should == expected_content
+    it 'a submit button' do
+      expect { user.click_on(:non_existing_element, :button)}.should raise_error
     end
   end
 
-  describe 'can confirm' do
-    it 'that they can see the content that is on the page' do
-      existing_content = "There are currently no pink frogs residing on this page"
+describe 'can read the correct information' do
+  it "from paragraph elements" do
+    expected_content = 'Blue skirt, red top'
 
-      user.can_see?(existing_content).should be_true
-    end
-
-    it 'that they can not see content that is not on the page' do
-      not_existing_content = "The pink ducks went home"
-
-      user.can_see?(not_existing_content).should be_false
-    end
-
-    it "that they can see a phrase contained in an element" do
-      phrase = "what is going on"
-
-      user.can_see_the?(phrase, in_the: :description).should be_true
-    end
-
-    it "that they cannot see a phrase when it's not contained in an element" do
-      phrase = "a phrase that will not be found in the text"
-
-      user.can_see_the?(phrase, in_the: :description).should be_false
-    end
+    user.whats_the(:item_information, :paragraph, :text).should == expected_content
   end
 
-  it 'can click elements' do
-    user.click_on :other_page, :link
+  it "from text field elements" do
+    expected_content = 'black with white stripes'
 
-    user.can_see?("The frog ate the cat").should be_true
+    user.whats_the(:color, :text_field, :value).should == expected_content
+  end
+end
 
-    user.goto :home_page
+describe 'can confirm' do
+  it 'that they can see the content that is on the page' do
+    existing_content = "There are currently no pink frogs residing on this page"
+
+    user.can_see?(existing_content).should be_true
   end
 
-  it "can read the message of an alert box" do
-    message = user.whats_the_alert_message_when_you do
-      user.click_on :alert, :button
-    end
+  it 'that they can not see content that is not on the page' do
+    not_existing_content = "The pink ducks went home"
 
-    message.should == "Roses are red"
+    user.can_see?(not_existing_content).should be_false
   end
 
-  it "can select an element from a drop down list" do
-    user.choose(:impersonation, "Michael Jackson").should == "Michael Jackson"
+  it "that they can see a phrase contained in an element" do
+    phrase = "what is going on"
+
+    user.can_see_the?(phrase, in_the: :description).should be_true
   end
 
-  it "can opt for a number of choices" do
-    user.opt_for(:apples)
-    user.opt_for(:oranges)
-    user.opt_for(:bananas)
+  it "that they cannot see a phrase when it's not contained in an element" do
+    phrase = "a phrase that will not be found in the text"
 
-    user.opted_for(:apples).should be_true
-    user.opted_for(:oranges).should be_true
-    user.opted_for(:bananas).should be_true
+    user.can_see_the?(phrase, in_the: :description).should be_false
+  end
+end
+
+it 'can click elements' do
+  user.click_on :other_page, :link
+
+  user.can_see?("The frog ate the cat").should be_true
+
+  user.goto :home_page
+end
+
+it "can read the message of an alert box" do
+  message = user.whats_the_alert_message_when_you do
+    user.click_on :alert, :button
   end
 
-  it "can opt out of a number of choices" do
-    user.opt_out(:brocoli)
-    user.opt_out(:spinach)
-    user.opt_out(:zuchinni)
+  message.should == "Roses are red"
+end
 
-    user.opt_out(:brocoli).should be_false
-    user.opt_out(:spinach).should be_false
-    user.opt_out(:zuchinni).should be_false
-  end
+it "can select an element from a drop down list" do
+  user.choose(:impersonation, "Michael Jackson").should == "Michael Jackson"
+end
 
-  it "looks in the available tables for ..."
+it "can opt for a number of choices" do
+  user.opt_for(:apples)
+  user.opt_for(:oranges)
+  user.opt_for(:bananas)
 
-  after(:all) do
-    browser.close
-  end
+  user.opted_for(:apples).should be_true
+  user.opted_for(:oranges).should be_true
+  user.opted_for(:bananas).should be_true
+end
+
+it "can opt out of a number of choices" do
+  user.opt_out(:brocoli)
+  user.opt_out(:spinach)
+  user.opt_out(:zuchinni)
+
+  user.opt_out(:brocoli).should be_false
+  user.opt_out(:spinach).should be_false
+  user.opt_out(:zuchinni).should be_false
+end
+
+it "looks in the available tables for ..."
+
+after(:all) do
+  browser.close
+end
 end
 
 class TestWebUser
@@ -172,4 +179,3 @@ class Application
     @elements[key]
   end
 end
-

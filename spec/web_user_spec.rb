@@ -6,17 +6,20 @@ describe WebUser do
   let(:application) { Application.new(
     { :home_page        => "file://#{TEST_DATA_DIR}/home_page.html",
       :name             => { :name => 'name' },
-      :flower           => { :id => 'flower' },
-      :item_information => { :id => 'information' },
-      :color            => { :name => 'color' },
-      :description      => { :name  => 'description'},
-      :alert            => { :id  => 'alertbutton'},
-      :impersonation    => { :id    => "dropdown" },
-      :other_page       => { :id    => "other_page" },
-      :apples           => { :name    => "apples" },
-      :oranges          => { :id      => "oranges" },
-      :bananas          => { :id      => "bananas" },
-      :submit           => { :id => "submit"  }
+        :flower           => { :id => 'flower' },
+        :item_information => { :id => 'information' },
+        :color            => { :name => 'color' },
+        :description      => { :name  => 'description'},
+        :alert            => { :id  => 'alertbutton'},
+        :impersonation    => { :id    => "dropdown" },
+        :other_page       => { :id    => "other_page" },
+        :apples           => { :name    => "apples"   },
+        :oranges          => { :id      => "oranges"  },
+        :bananas          => { :id      => "bananas"  },
+        :brocoli          => { :id      => "brocoli"  },
+        :zuchinni         => { :id      => "zuchinni" },
+        :spinach         =>  { :id      => "spinach"  },
+        :submit           => { :id => "submit"  }
   })}
   let(:user) { TestWebUser.new(application, browser) }
   let(:browser) { Watir::Browser.new }
@@ -133,6 +136,16 @@ describe WebUser do
     user.opted_for(:apples).should be_true
     user.opted_for(:oranges).should be_true
     user.opted_for(:bananas).should be_true
+  end
+
+  it "can opt out of a number of choices" do
+    user.opt_out(:brocoli)
+    user.opt_out(:spinach)
+    user.opt_out(:zuchinni)
+
+    user.opt_out(:brocoli).should be_false
+    user.opt_out(:spinach).should be_false
+    user.opt_out(:zuchinni).should be_false
   end
 
   it "looks in the available tables for ..."

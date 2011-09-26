@@ -56,6 +56,14 @@ module WebUser
     @browser.checkbox(application(element)).set?
   end
 
+
+
+  def opt_out element
+    @browser.checkbox(application(element)).clear
+  end
+
+
+
   def set_checkbox name
     @browser.checkbox(:name, name).set
   end

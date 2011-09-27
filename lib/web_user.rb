@@ -48,16 +48,16 @@ module WebUser
     do_this.call
   end
 
-  def opt_for element
-    @browser.checkbox(application(element)).set
+  def select choice, type
+    @browser.send(type, application(choice)).set 
   end
 
-  def opted_for element
-    @browser.checkbox(application(element)).set?
+  def deselect choice
+    @browser.checkbox(application(choice)).clear 
   end
 
-  def opt_out element
-    @browser.checkbox(application(element)).clear
+  def the_option? choice, type
+    @browser.send(type, application(choice)).set?
   end
 
   def set_checkbox name

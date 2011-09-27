@@ -15,10 +15,7 @@ describe WebUser do
         :other_page       => { :id    => "other_page" },
         :apples           => { :name    => "apples"   },
         :oranges          => { :id      => "oranges"  },
-        :bananas          => { :id      => "bananas"  },
-        :brocoli          => { :id      => "brocoli"  },
-        :zuchinni         => { :id      => "zuchinni" },
-        :spinach         =>  { :id      => "spinach"  },
+        :broccoli          => { :id      => "broccoli"  },
         :submit           => { :id => "submit"  }
   })}
   let(:user) { TestWebUser.new(application, browser) }
@@ -135,24 +132,18 @@ it "can select an element from a drop down list" do
   user.choose(:impersonation, "Michael Jackson").should == "Michael Jackson"
 end
 
-it "can opt for a number of choices" do
-  user.opt_for(:apples)
-  user.opt_for(:oranges)
-  user.opt_for(:bananas)
+{checkbox: :apples, radio: :oranges}.each do | type, element |
+  it "can select #{type} element", :focus => true do
+    user.select element, type
 
-  user.opted_for(:apples).should be_true
-  user.opted_for(:oranges).should be_true
-  user.opted_for(:bananas).should be_true
+    user.the_option?(element, type).should be_true
+  end
 end
 
-it "can opt out of a number of choices" do
-  user.opt_out(:brocoli)
-  user.opt_out(:spinach)
-  user.opt_out(:zuchinni)
+it "can deselect a checkbox element" do
+  user.deselect :broccoli
 
-  user.opt_out(:brocoli).should be_false
-  user.opt_out(:spinach).should be_false
-  user.opt_out(:zuchinni).should be_false
+  user.the_option?(:broccoli, :checkbox).should be_false
 end
 
 it "looks in the available tables for ..."
